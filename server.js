@@ -4,55 +4,55 @@ const PORT = 3000;
 
 app.use(express.json());
 
-let items = [];
+let filmes = [];
 
 // Create
-app.post('/items', (req, res) => {
-  const item = req.body;
+app.post('/filmes', (req, res) => {
+  const filme = req.body;
   // Verifica se já existe um item com esse id
-  if (items.some(i => i.id === item.id)) {
+  if (filmes.some(i => i.id === filme.id)) {
     return res.status(400).json({ error: 'ID já existe' });
   }
-  items.push(item);
-  res.status(201).json(item);
+  filmes.push(filme);
+  res.status(201).json(filme);
 });
 
 // Read all
-app.get('/items', (req, res) => {
-  res.json(items);
+app.get('/filmes', (req, res) => {
+  res.json(filmes);
 });
 
 // Read one
-app.get('/items/:id', (req, res) => {
-  const item = items.find(i => i.id == req.params.id);
-  if (item) {
-    res.json(item);
+app.get('/filmes/:id', (req, res) => {
+  const filme = filmes.find(i => i.id == req.params.id);
+  if (filme) {
+    res.json(filme);
   } else {
-    res.status(404).json({ error: 'Item não encontrado' });
+    res.status(404).json({ error: 'Filme não encontrado' });
   }
 });
 
 // Update
-app.put('/items/:id', (req, res) => {
+app.put('/filmes/:id', (req, res) => {
   const id = req.params.id;
-  const index = items.findIndex(i => i.id == id);
+  const index = filmes.findIndex(i => i.id == id);
   if (index !== -1) {
-    items[index] = req.body;
-    res.json(items[index]);
+    filmes[index] = req.body;
+    res.json(filmes[index]);
   } else {
-    res.status(404).json({ error: 'Item não encontrado' });
+    res.status(404).json({ error: 'Filme não encontrado' });
   }
 });
 
 // Delete
-app.delete('/items/:id', (req, res) => {
+app.delete('/filmes/:id', (req, res) => {
   const id = req.params.id;
-  const index = items.findIndex(i => i.id == id);
+  const index = filmes.findIndex(i => i.id == id);
   if (index !== -1) {
-    const deleted = items.splice(index, 1);
+    const deleted = filmes.splice(index, 1);
     res.json(deleted[0]);
   } else {
-    res.status(404).json({ error: 'Item não encontrado' });
+    res.status(404).json({ error: 'Filme não encontrado' });
   }
 });
 
